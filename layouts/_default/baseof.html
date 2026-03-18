@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+  {{ partial "head.html" . }}
+</head>
+<body class="{{ if and (eq .Section `blogs`) (eq .Kind `section`) }}blogs-list-page{{ end }}">
+  {{ partial "nav.html" . }}
+  <main id="top" class="site-main">
+    {{ block "main" . }}{{ end }}
+  </main>
+  {{ if .IsHome }}
+    {{ partial "footer.html" . }}
+  {{ end }}
+
+  <script>
+    const root = document.documentElement;
+    const toggle = document.getElementById('theme-toggle');
+    const saved = localStorage.getItem('theme');
+    if (saved === 'dark') root.setAttribute('data-theme', 'dark');
+
+    if (toggle) {
+      toggle.addEventListener('click', () => {
+        const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+        root.setAttribute('data-theme', next);
+        localStorage.setItem('theme', next);
+      });
+    }
+
+    const navToggle = document.getElementById('nav-toggle');
+    const navMenu = document.getElementById('nav-menu');
+    const siteHeader = document.querySelector('.site-header');
+    if (navToggle && navMenu) {
+      navToggle.addEventListener('click', () => {
+        navMenu.classList.toggle('open');
+        navToggle.setAttribute('aria-expanded', navMenu.classList.contains('open') ? 'true' : 'false');
+      });
+    }
+
+    const setAnchorOffset = () => {
+      if (!siteHeader) return;
+      const offset = Math.ceil(siteHeader.getBoundingClientRect().height) + 12;
+      document.documentElement.style.setProperty('--anchor-offset', `${offset}px`);
+    };
+    setAnchorOffset();
+    window.addEventListener('resize', setAnchorOffset);
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) entry.target.classList.add('visible');
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+  </script>
+</body>
+</html>

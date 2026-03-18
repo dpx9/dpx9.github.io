@@ -1,0 +1,53 @@
+baseURL = "https://dpx9.github.io/"
+languageCode = "en-us"
+title = "DP"
+summaryLength = 26
+enableRobotsTXT = true
+
+[pagination]
+  pagerSize = 9
+
+[permalinks]
+  projects = "/projects/:slug/"
+  blogs = "/blogs/:slug/"
+  tech = "/tech/:slug/"
+  faqs = "/faqs/:slug/"
+
+[taxonomies]
+  tag = "tags"
+
+[sitemap]
+  changefreq = "weekly"
+  priority = 0.7
+  filename = "sitemap.xml"
+
+[params]
+  author = "Your Name"
+  description = "I can learn, adapt and build efficient Fullstack application & AI Integration faster."
+  email = "hello@example.com"
+  github = "https://github.com/"
+  linkedin = "https://www.linkedin.com/"
+  twitter = "https://twitter.com/"
+
+[markup]
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      unsafe = false
+
+[menu]
+  [[menu.main]]
+    name = "Projects"
+    url = "/projects/"
+    weight = 1
+  [[menu.main]]
+    name = "Blogs"
+    url = "/blogs/"
+    weight = 2
+  [[menu.main]]
+    name = "Tech"
+    url = "/tech/"
+    weight = 3
+  [[menu.main]]
+    name = "FAQs"
+    url = "/faqs/"
+    weight = 4

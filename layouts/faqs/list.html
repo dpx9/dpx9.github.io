@@ -1,0 +1,16 @@
+{{ define "main" }}
+<section class="container section-space">
+  <div class="section-head reveal">
+    <h1>FAQs</h1>
+    <p class="lead">Quick answers about how I work, communicate, and deliver.</p>
+  </div>
+  <div class="faq-list">
+    {{ range .Pages.ByWeight }}
+      <article class="faq-item reveal">
+        <h2><a href="{{ .RelPermalink }}">{{ .Title }}</a></h2>
+        <p>{{ .Params.summary }}</p>
+      </article>
+    {{ end }}
+  </div>
+</section>
+{{ end }}

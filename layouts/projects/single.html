@@ -1,0 +1,9 @@
+{{ define "main" }}
+<article class="container article section-space reveal">
+  <p class="meta">Project</p>
+  <h1>{{ .Title }}</h1>
+  <p class="lead">{{ .Params.summary }}</p>
+  <p class="meta">Stack: {{ .Params.stack }}</p>
+  <div class="content">{{ .Content }}</div>
+</article>
+{{ end }}

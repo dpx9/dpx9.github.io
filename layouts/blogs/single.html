@@ -1,0 +1,12 @@
+{{ define "main" }}
+<article class="blog-post section-space">
+  <div class="blog-post-inner reveal">
+    <header class="blog-post-head">
+      <p class="blog-stream-meta">{{ .Date.Format "Jan 2, 2006" }} · {{ .ReadingTime }} min read</p>
+      <h1 class="blog-post-title">{{ .Title }}</h1>
+      <p class="blog-post-summary">{{ .Params.summary }}</p>
+    </header>
+    <div class="blog-post-content content">{{ .Content }}</div>
+  </div>
+</article>
+{{ end }}

@@ -1,0 +1,18 @@
+{{ define "main" }}
+<section class="container section-space">
+  <div class="section-head reveal">
+    <h1>{{ .Title }}</h1>
+    {{ with .Content }}<div class="lead">{{ . }}</div>{{ end }}
+  </div>
+
+  <div class="item-grid">
+    {{ range .Pages.ByDate.Reverse }}
+      <article class="item-card reveal">
+        <p class="meta">{{ .Date.Format "Jan 2, 2006" }}</p>
+        <h2><a href="{{ .RelPermalink }}">{{ .Title }}</a></h2>
+        <p>{{ with .Params.summary }}{{ . }}{{ else }}{{ .Summary }}{{ end }}</p>
+      </article>
+    {{ end }}
+  </div>
+</section>
+{{ end }}

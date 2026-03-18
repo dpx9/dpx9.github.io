@@ -1,0 +1,16 @@
+languages:
+  - TypeScript
+  - Go
+  - Python
+frameworks:
+  - Next.js
+  - Hugo
+  - Node.js
+platforms:
+  - PostgreSQL
+  - Redis
+  - Docker
+ai:
+  - OpenAI API
+  - RAG Pipelines
+  - Prompt Evaluation

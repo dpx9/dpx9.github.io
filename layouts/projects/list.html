@@ -1,0 +1,17 @@
+{{ define "main" }}
+<section class="container section-space">
+  <div class="section-head reveal">
+    <h1>Projects</h1>
+    <p class="lead">A personal archive of products I have designed, built, and iterated in public or with clients.</p>
+  </div>
+  <div class="item-grid projects-grid">
+    {{ range .Pages.ByDate.Reverse }}
+      <article class="item-card project-card reveal">
+        <p class="meta">{{ .Params.stack }}</p>
+        <h2><a href="{{ .RelPermalink }}">{{ .Title }}</a></h2>
+        <p>{{ .Params.summary }}</p>
+      </article>
+    {{ end }}
+  </div>
+</section>
+{{ end }}

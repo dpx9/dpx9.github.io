@@ -1,0 +1,17 @@
+{{ define "main" }}
+<section class="container section-space">
+  <div class="section-head reveal">
+    <h1>Tech</h1>
+    <p class="lead">The tools and architecture patterns I personally rely on when building products.</p>
+  </div>
+  <div class="item-grid">
+    {{ range .Pages.ByDate.Reverse }}
+      <article class="item-card reveal">
+        <p class="meta">{{ .Params.category }}</p>
+        <h2><a href="{{ .RelPermalink }}">{{ .Title }}</a></h2>
+        <p>{{ .Params.summary }}</p>
+      </article>
+    {{ end }}
+  </div>
+</section>
+{{ end }}

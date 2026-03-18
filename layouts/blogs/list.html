@@ -1,0 +1,95 @@
+{{ define "main" }}
+{{ $topics := slice }}
+{{ $categories := slice }}
+{{ range .Pages }}
+  {{ with .Params.topics }}
+    {{ range . }}
+      {{ $topics = $topics | append . }}
+    {{ end }}
+  {{ end }}
+  {{ with .Params.categories }}
+    {{ range . }}
+      {{ $categories = $categories | append . }}
+    {{ end }}
+  {{ end }}
+{{ end }}
+{{ $topics = $topics | uniq | sort }}
+{{ $categories = $categories | uniq | sort }}
+
+<section class="blog-hub section-space">
+  <div class="blog-hub-inner">
+    <header class="blog-hub-head reveal">
+      <h1>Blogs</h1>
+      <p>Working notes from my desk: what I am learning, testing, and refining.</p>
+    </header>
+    <div class="blog-layout">
+      <aside class="blog-sidebar reveal" aria-label="Blog filters and metadata">
+        <section class="blog-side-block">
+          <details class="blog-side-collapse" open>
+            <summary>Categories</summary>
+            <ul>
+              {{ range $categories }}
+                <li class="blog-side-item">{{ . }}</li>
+              {{ end }}
+            </ul>
+          </details>
+        </section>
+        <section class="blog-side-block">
+          <details class="blog-side-collapse" open>
+            <summary>Topics</summary>
+            <ul>
+              {{ range $topics }}
+                <li class="blog-side-item">{{ . }}</li>
+              {{ end }}
+            </ul>
+          </details>
+        </section>
+        <section class="blog-side-block">
+          <h2>Sort by Date</h2>
+          <button id="date-filter-toggle" class="blog-filter-btn" type="button" data-order="latest" aria-label="Toggle date sorting">
+            Latest first
+          </button>
+        </section>
+      </aside>
+
+      <div id="blog-stream" class="blog-stream">
+        {{ range .Pages.ByDate.Reverse }}
+          <article class="blog-stream-item reveal" data-date="{{ .Date.Unix }}">
+            <p class="blog-stream-meta">{{ .Date.Format "Jan 2, 2006" }} · {{ .ReadingTime }} min read</p>
+            <h2><a href="{{ .RelPermalink }}">{{ .Title }}</a></h2>
+            <p class="blog-stream-summary">{{ .Params.summary }}</p>
+            <a class="blog-readmore" href="{{ .RelPermalink }}">Read article</a>
+          </article>
+        {{ end }}
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  (function () {
+    const btn = document.getElementById('date-filter-toggle');
+    const stream = document.getElementById('blog-stream');
+    if (!btn || !stream) return;
+
+    const sortPosts = (order) => {
+      const posts = Array.from(stream.querySelectorAll('.blog-stream-item'));
+      posts
+        .sort((a, b) => {
+          const da = Number(a.dataset.date || 0);
+          const db = Number(b.dataset.date || 0);
+          return order === 'latest' ? db - da : da - db;
+        })
+        .forEach((post) => stream.appendChild(post));
+    };
+
+    btn.addEventListener('click', () => {
+      const current = btn.dataset.order === 'latest' ? 'latest' : 'oldest';
+      const next = current === 'latest' ? 'oldest' : 'latest';
+      btn.dataset.order = next;
+      btn.textContent = next === 'latest' ? 'Latest first' : 'Oldest first';
+      sortPosts(next);
+    });
+  })();
+</script>
+{{ end }}
